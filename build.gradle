@@ -1,0 +1,64 @@
+group 'com.wds'
+version '1.0'
+
+apply plugin: 'idea'
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+
+buildscript {
+    ext {
+        springBootVersion = '1.4.3.RELEASE'
+    }
+    repositories {
+        maven { url 'http://10.17.193.98:8080/nexus/content/groups/public/' }
+        maven { url "http://repo.spring.io/release" }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+allprojects {
+    sourceCompatibility = 1.8
+    //增加编码设置，防止编译时出现乱码
+    compileJava.options.encoding = 'UTF-8'//编码设置
+    compileTestJava.options.encoding = 'UTF-8'
+}
+
+ext {
+    springVersion = '4.2.0.RELEASE'
+	springBootVersion = '1.4.3.RELEASE'
+}
+
+
+jar {
+	baseName = 'spring-boot'
+	version = '0.0.1-SNAPSHOT'
+}
+
+
+//创建工程的目录结构
+task createJavaProject << {
+    sourceSets*.java.srcDirs*.each { it.mkdirs() }
+    sourceSets*.resources.srcDirs*.each { it.mkdirs() }
+}
+
+configurations {
+    all {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
+}
+
+
+repositories {
+    maven { url 'http://10.17.193.98:8080/nexus/content/groups/public/' }
+    maven { url "http://repo.spring.io/release" }
+}
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
+    compile("org.springframework.boot:spring-boot-starter-log4j2:${springBootVersion}")
+    compile("org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}")
+}
+
+
