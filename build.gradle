@@ -10,7 +10,7 @@ buildscript {
         springBootVersion = '1.4.3.RELEASE'
     }
     repositories {
-        maven { url 'http://10.17.193.98:8080/nexus/content/groups/public/' }
+        mavenLocal()
         maven { url "http://repo.spring.io/release" }
     }
     dependencies {
@@ -51,7 +51,7 @@ configurations {
 
 
 repositories {
-    maven { url 'http://10.17.193.98:8080/nexus/content/groups/public/' }
+    mavenLocal()
     maven { url "http://repo.spring.io/release" }
 }
 
